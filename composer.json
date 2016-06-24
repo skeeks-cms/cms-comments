@@ -1,0 +1,27 @@
+{
+	"name": "skeeks/cms-comments",
+	"description": "Comments component",
+	"keywords": ["yii", "app", "skeeks", "sx", "framework", "comments"],
+    "homepage": "http://skeeks.com/",
+	"type": "yii2-extension",
+	"license": "GPL-3.0+",
+	"support": {
+        "issues": "http://skeeks.com/",
+        "wiki": "http://skeeks.com/",
+        "source": "https://github.com/skeeks-cms/cms-comments"
+    },
+	"authors": [
+		{
+			"name": "Semenov Alexander",
+			"email": "semenov@skeeks.com"
+		}
+	],
+	"require": {
+		"skeeks/cms": "*",
+	},
+    "autoload": {
+        "psr-4": {
+            "skeeks\\cms\\comments\\": ""
+        }
+    }
+}
