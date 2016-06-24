@@ -17,7 +17,8 @@
 		}
 	],
 	"require": {
-		"skeeks/cms": "*"
+		"skeeks/cms": "*",
+	  	"yiidoc/yii2-timeago": "*"
 	},
     "autoload": {
         "psr-4": {

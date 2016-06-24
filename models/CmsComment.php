@@ -5,8 +5,8 @@
  * @copyright 2010 SkeekS (СкикС)
  * @date 24.06.2016
  */
-namespace skeeks\comments\models;
-use skeeks\comments\CommentsModule;
+namespace skeeks\cms\comments\models;
+use skeeks\cms\comments\CommentsModule;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;

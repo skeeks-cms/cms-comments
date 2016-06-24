@@ -1,5 +1,5 @@
 <?php
-class m150706_175101_create_comment_table extends yii\db\Migration
+class m160624_175101_create_table__cms_comment extends yii\db\Migration
 {
     const TABLE_NAME = '{{%cms_comment}}';
 
@@ -64,8 +64,8 @@ class m150706_175101_create_comment_table extends yii\db\Migration
             'cms_comment__user_id', self::TABLE_NAME,
             'user_id', '{{%cms_user}}', 'id', 'SET NULL', 'SET NULL'
         );
-
     }
+
     public function down()
     {
         $this->dropIndex('cms_comment__created_by', self::TABLE_NAME);

@@ -5,7 +5,7 @@
  * @copyright 2010 SkeekS (СкикС)
  * @date 24.06.2016
  */
-namespace skeeks\comments\models;
+namespace skeeks\cms\comments\models;
 /**
  * This is the ActiveQuery class for [[Comment]].
  *

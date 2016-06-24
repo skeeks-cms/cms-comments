@@ -16,5 +16,5 @@ use yii\base\Module;
  */
 class CommentsModule extends Module
 {
-    public $controllerNamespace = 'skeeks\yii2\comments\controllers';
+    public $controllerNamespace = 'skeeks\cms\comments\controllers';
 }
