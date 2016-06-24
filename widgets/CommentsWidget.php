@@ -23,12 +23,12 @@ class CommentsWidget extends \yii\base\Widget
     public function run()
     {
         $commentsAsset = CommentsAsset::register($this->getView());
-        CommentModule::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
+        CommentsModule::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
         $model = $this->model;
         $model_id = $this->model_id;
         $comment = new CmsComment(compact('model', 'model_id'));
         $comment->scenario = (Yii::$app->user->isGuest) ? CmsComment::SCENARIO_GUEST : CmsComment::SCENARIO_USER;
-        if ((!CommentModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest) && $comment->load(Yii::$app->getRequest()->post())) {
+        if ((!CommentsModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest) && $comment->load(Yii::$app->getRequest()->post())) {
             if ($comment->validate() && Yii::$app->getRequest()->validateCsrfToken()
                 && Yii::$app->getRequest()->getCsrfToken(true) && $comment->save()
             ) {

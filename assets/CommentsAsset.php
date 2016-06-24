@@ -10,6 +10,7 @@ use skeeks\cms\comments\CommentsModule;
 use yii\helpers\Url;
 use yii\web\AssetBundle;
 use yii\web\View;
+
 class CommentsAsset extends AssetBundle
 {
     public $sourcePath = '@skeeks/cms/comments/assets/source';
