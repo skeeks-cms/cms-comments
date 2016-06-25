@@ -1,6 +1,5 @@
 <?php
-use yeesoft\comments\assets\CommentsAsset;
-use yeesoft\comments\Comments;
+use skeeks\cms\comments\assets\CommentsAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -10,8 +9,8 @@ use yii\widgets\ActiveForm;
 
 <?php
 $commentsAsset = CommentsAsset::register($this);
-Comments::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
-$col12 = Comments::getInstance()->gridColumns;
+\skeeks\cms\comments\CommentsModule::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
+$col12 = \skeeks\cms\comments\CommentsModule::getInstance()->gridColumns;
 $col6 = (int) ($col12 / 2);
 $formID = 'comment-form' . (($comment->parent_id) ? '-' . $comment->parent_id : '');
 $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
@@ -23,7 +22,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     $form = ActiveForm::begin([
         'action' => NULL,
         'validateOnBlur' => FALSE,
-        'validationUrl' => Url::to(['/' . Comments::getInstance()->commentsModuleID . '/validate/index']),
+        'validationUrl' => Url::to(['/' . \skeeks\cms\comments\CommentsModule::getInstance()->commentsModuleID . '/validate/index']),
         'id' => $formID,
         'class' => 'com-form'
     ]);
@@ -31,26 +30,26 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
         echo $form->field($comment, 'parent_id')->hiddenInput()->label(false);
     }
     ?>
-    <?php if (Comments::getInstance()->displayAvatar): ?>
+    <?php if (\skeeks\cms\comments\CommentsModule::getInstance()->displayAvatar): ?>
         <div class="avatar">
-            <img src="<?= Comments::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
+            <img src="<?= \skeeks\cms\comments\CommentsModule::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
         </div>
     <?php endif; ?>
-    <div class="comment-fields<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
+    <div class="comment-fields<?= (\skeeks\cms\comments\CommentsModule::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
 
         <div class="row">
             <div class="col-lg-<?= $col12 ?>">
                 <?= $form->field($comment, 'content')->textarea([
                     'class' => 'form-control input-sm',
-                    'placeholder' => Comments::t('comments', 'Share your thoughts...')
+                    'placeholder' => \Yii::t('skeeks/comments', 'Share your thoughts...')
                 ])->label(false) ?>
             </div>
         </div>
 
         <div class="comment-fields-more">
             <div class="buttons text-right">
-                <?= Html::button(Comments::t('comments', 'Cancel'), ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
-                <?= Html::submitButton(($comment->parent_id) ? Comments::t('comments', 'Reply') : Comments::t('comments', 'Post'), ['class' => 'btn btn-primary btn-sm']) ?>
+                <?= Html::button(\Yii::t('skeeks/comments', 'Cancel'), ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
+                <?= Html::submitButton(($comment->parent_id) ? \Yii::t('skeeks/comments', 'Reply') : \Yii::t('skeeks/comments', 'Post'), ['class' => 'btn btn-primary btn-sm']) ?>
             </div>
             <div class="fields">
                 <div class="row">
@@ -59,7 +58,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                             <?= $form->field($comment, 'username', ['enableClientValidation' => false, 'enableAjaxValidation' => true])->textInput([
                                 'maxlength' => true,
                                 'class' => 'form-control input-sm',
-                                'placeholder' => Comments::t('comments', 'Your name')
+                                'placeholder' => \Yii::t('skeeks/comments', 'Your name')
                             ])->label(false) ?>
                         </div>
                         <div class="col-lg-<?= $col6 ?>">
@@ -67,12 +66,12 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                                 'maxlength' => true,
                                 'email' => true,
                                 'class' => 'form-control input-sm',
-                                'placeholder' => Comments::t('comments', 'Your email')
+                                'placeholder' => \Yii::t('skeeks/comments', 'Your email')
                             ])->label(false) ?>
                         </div>
                     <?php else: ?>
                         <div class="col-lg-<?= $col6 ?>">
-                            <?= (($comment->parent_id) ? Comments::t('comments', 'Reply as') : Comments::t('comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->username . '</b>'; ?>
+                            <?= (($comment->parent_id) ? \Yii::t('skeeks/comments', 'Reply as') : \Yii::t('skeeks/comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->username . '</b>'; ?>
                         </div>
                     <?php endif; ?>
                 </div>

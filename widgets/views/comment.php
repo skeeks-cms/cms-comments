@@ -5,12 +5,12 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\timeago\TimeAgo;
 ?>
-<?php if (Comments::getInstance()->displayAvatar): ?>
+<?php if (CommentsModule::getInstance()->displayAvatar): ?>
     <div class="avatar">
-        <img src="<?= Comments::getInstance()->renderUserAvatar($model->user_id) ?>"/>
+        <img src="<?= CommentsModule::getInstance()->renderUserAvatar($model->user_id) ?>"/>
     </div>
 <?php endif; ?>
-<div class="comment-content<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
+<div class="comment-content<?= (CommentsModule::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
     <div class="comment-header">
         <a class="author"><?= Html::encode($model->getAuthor()); ?></a>
         <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
@@ -18,11 +18,11 @@ use yii\timeago\TimeAgo;
     <div class="comment-text">
         <?= Html::encode($model->content); ?>
     </div>
-    <?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
+    <?php if ($nested_level < CommentsModule::getInstance()->maxNestedLevel): ?>
         <div class="comment-footer">
-            <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
+            <?php if (!CommentsModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
                 <a class="reply-button" data-reply-to="<?= $model->id; ?>"
-                   href="#"><?= Comments::t('comments', 'Reply') ?></a>
+                   href="#"><?= \Yii::t('skeeks/comments', 'Reply') ?></a>
                 <!--<span class="dot-left"></span>
                 <a class="glyphicon glyphicon-thumbs-up"></a> <span>0</span> &nbsp;
                 <a class="glyphicon glyphicon-thumbs-down"></a> <span>0</span><span class="dot-left"></span>
@@ -32,11 +32,11 @@ use yii\timeago\TimeAgo;
     <?php endif; ?>
 </div>
 
-<?php if ($nested_level < Comments::getInstance()->maxNestedLevel): ?>
-    <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
-        <div class="reply-form<?= (Comments::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
+<?php if ($nested_level < CommentsModule::getInstance()->maxNestedLevel): ?>
+    <?php if (!CommentsModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
+        <div class="reply-form<?= (CommentsModule::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
             <?php if ($model->id == ArrayHelper::getValue(Yii::$app->getRequest()->post(), 'Comment.parent_id')) : ?>
-                <?= CommentsForm::widget(['reply_to' => $model->id]); ?>
+                <?= CommentsFormWidget::widget(['reply_to' => $model->id]); ?>
             <?php endif; ?>
         </div>
     <?php endif; ?>

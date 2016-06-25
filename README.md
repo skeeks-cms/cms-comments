@@ -18,94 +18,102 @@ or add
 "skeeks/cms-comments": "*"
 ```
 
+- Run migrations
+
+```php
+yii migrate --migrationPath=@skeeks/cms/comments/migrations/
+```
 
 How to use (simple)
 ----------
 
 
-```php
-//App config
-[
-    
-    'components'    =>
-    [
-        //....
-        'externalLinks' =>
-        [
-            'class' => 'skeeks\yii2\externalLinks\ExternalLinksComponent',
-        ],
-        //....
-    ],
+Configuration
+------
 
-    'modules'    =>
-    [
-        //....
-        'externallinks' =>
-        [
-            'class' => 'skeeks\yii2\externalLinks\ExternalLinksModule',
-        ],
-        //....
-    ]
-]
-
-```
-
-How to use (advanced)
-----------
-
+- In your config file
 
 ```php
-//App config
-[
-    'bootstrap'    => ['externalLinks'],
-
-    'components'    =>
-    [
-        //....
-        'externalLinks' =>
-        [
-            'class' => 'skeeks\yii2\externalLinks\ExternalLinksComponent',
-
-            //Additional
-            'enabled'                           => true,
-            'noReplaceLocalDomain'              => true,
-            'backendRoute'                      => '/externallinks/redirect/redirect',
-            'backendRouteParam'                 => 'url',
-            'enabledB64Encode'                  => true,
-            'noReplaceLinksOnDomains'           => [
-                'site1.ru',
-                'www.site1.ru',
-                'site2.ru',
-            ],
-        ],
-        
-        'urlManager' => 
-        [
-            'rules' => 
-            [
-                //Rewriting the standard route
-                //And add robots.txt  Disallow: /~*
-                '~skeeks-redirect'                        => '/externallinks/redirect/redirect',
-            ]
-        ]
-        //....
-    ],
-
-    'modules'    =>
-    [
-        //....
-        'externallinks' =>
-        [
-            'class' => 'skeeks\yii2\externalLinks\ExternalLinksModule',
-        ],
-        //....
-    ]
-]
-
+'bootstrap' => ['comments'],
+'modules'=>[
+	'comments' => [
+		'class' => 'yeesoft\comments\Comments',
+	],
+],
 ```
 
-##Screenshot
-[![SkeekS CMS admin panel](http://marketplace.cms.skeeks.com/uploads/all/b3/c5/f6/b3c5f64a07798c80f78c0de102a4cf14.png)](http://marketplace.cms.skeeks.com/uploads/all/b3/c5/f6/b3c5f64a07798c80f78c0de102a4cf14.png)
+- In you model [optional]
+
+```php
+public function behaviors()
+{
+  return [
+    'comments' => [
+      'class' => 'yeesoft\comments\behaviors\CommentsBehavior'
+    ]
+  ];
+}
+```
+
+Usage
+---
+
+- Widget namespace
+```php
+use yeesoft\comments\widgets\Comments;
+```
+
+- Add comment widget in model view using (string) page key :
+
+```php
+echo Comments::widget(['model' => $pageKey]);
+```
+
+- Or display comments using model name and id:
+
+```php
+echo Comments::widget(['model' => 'post', 'model_id' => 1]);
+```
+
+- Or display comments using model behavior:
+
+```php
+echo Post::findOne(10)->displayComments();
+```
+
+Module Options
+-------
+
+Use this options to configurate comments module:
+
+- `userModel` - User model class name.
+
+- `maxNestedLevel` - Maximum allowed nested level for comment's replies.
+
+- `onlyRegistered` - Indicates whether not registered users can leave a comment.
+
+- `orderDirection` - Comments order direction.
+
+- `nestedOrderDirection` - Replies order direction.
+
+- `userAvatar` - The field for displaying user avatars.
+
+  Is this field is NULL default avatar image will be displayed. Also it can specify path to image or use callable type.
+
+  If this property is specified as a callback, it should have the following signature: `function ($user_id)`
+
+  Example of module settings:
+  ```php
+    'comments' => [
+      'class' => 'yeesoft\comments\Comments',
+      'userAvatar' => function($user_id){
+        return User::getUserAvatarByID($user_id);
+      }
+    ]
+  ```
+
+Screenshots
+-------
 
 ___
 

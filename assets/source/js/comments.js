@@ -16,7 +16,9 @@ $(document).ready(function () {
     });
 
     //Show 'username' and 'email' fields in main form and hide all reply forms
-    $(document).on('click', '.comments-main-form .field-comment-content', function (event) {
+    $(document).on('click', '.comments-main-form .field-cmscomment-content', function (event) {
+                console.log(1);
+
         event.preventDefault();
         $('.comments-main-form').find('.comment-fields-more').show(displayFormDuration);
         $('.reply-form').hide(displayFormDuration);

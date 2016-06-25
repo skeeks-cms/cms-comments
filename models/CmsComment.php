@@ -50,7 +50,7 @@ class CmsComment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%comment}}';
+        return '{{%cms_comment}}';
     }
     /**
      * @inheritdoc
@@ -264,7 +264,7 @@ class CmsComment extends \yii\db\ActiveRecord
      */
     public function isReplied()
     {
-        return Comment::find()->where(['parent_id' => $this->id])->active()->count();
+        return static::find()->where(['parent_id' => $this->id])->active()->count();
     }
     /**
      * Get count of active comments by $model and $model_id
@@ -275,6 +275,6 @@ class CmsComment extends \yii\db\ActiveRecord
      */
     public static function activeCount($model, $model_id = NULL)
     {
-        return Comment::find()->where(['model' => $model, 'model_id' => $model_id])->active()->count();
+        return static::find()->where(['model' => $model, 'model_id' => $model_id])->active()->count();
     }
 }

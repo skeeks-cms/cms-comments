@@ -60,7 +60,7 @@ class CommentsHelper
      * @param \yeesoft\comments\models\Comment $comment
      * @return array
      */
-    public static function getReplyConfig(Comment $comment)
+    public static function getReplyConfig(CmsComment $comment)
     {
         $model = $comment->model;
         $model_id = $comment->model_id;

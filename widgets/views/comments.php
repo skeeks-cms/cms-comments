@@ -1,9 +1,8 @@
 <?php
-use skeeks\comments\CommentsModule as CommentsModule;
-use yeesoft\comments\Comments;
-use yeesoft\comments\components\CommentsHelper;
-use yeesoft\comments\models\Comment;
-use yeesoft\comments\widgets\CommentsForm;
+use skeeks\cms\comments\CommentsModule;
+use skeeks\cms\comments\components\CommentsHelper;
+use skeeks\cms\comments\models\CmsComment;
+use skeeks\cms\comments\widgets\CommentsFormWidget;
 use yii\timeago\TimeAgo;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
@@ -15,13 +14,13 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
 ?>
 <div class="comments">
     <?php if ($this->beginCache($cacheKey . '-count', $cacheProperties)) : ?>
-        <h5><?= Comments::t('comments', 'All Comments') ?> (<?= Comment::activeCount($model, $model_id) ?>)</h5>
+        <h5><?= \Yii::t('skeeks/comments', 'All Comments') ?> (<?= CmsComment::activeCount($model, $model_id) ?>)</h5>
         <?php $this->endCache(); ?>
     <?php endif; ?>
 
-    <?php if (!Comments::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
+    <?php if (!CommentsModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
         <div class="comments-main-form">
-            <?= CommentsForm::widget(); ?>
+            <?= CommentsFormWidget::widget(); ?>
         </div>
     <?php endif; ?>
 
@@ -30,7 +29,7 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
         Pjax::begin();
         echo ListView::widget([
             'dataProvider' => $dataProvider,
-            'emptyText' => CommentsModule::t('comments', 'No Comments'),
+            'emptyText' => \Yii::t('skeeks/comments', 'No Comments'),
             'itemView' => function ($model, $key, $index, $widget) {
                 $nested_level = 1;
                 return $this->render('comment', compact('model', 'widget', 'nested_level'));

@@ -28,7 +28,7 @@ return [
     [
         'comments' =>
         [
-            'class' => 'skeeks/cms/comments/CommentsModule'
+            'class' => 'skeeks\cms\comments\CommentsModule'
         ]
     ]
 ];
