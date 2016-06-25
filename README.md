@@ -121,19 +121,12 @@ Use this options to configurate comments module:
 
   If this property is specified as a callback, it should have the following signature: `function ($user_id)`
 
-  Example of module settings:
-  ```php
-    'comments' => [
-      'class' => 'skeeks\cms\comments\CommentsModule',
-      'userAvatar' => function($user_id){
-        return User::getUserAvatarByID($user_id);
-      }
-    ]
-  ```
 
-Screenshots
+For dev
 -------
-
+```php
+php yii lang/translate-app @skeeks/cms/comments/messages/ru/main.php @skeeks/cms/comments/messages/ main.php
+```
 ___
 
 

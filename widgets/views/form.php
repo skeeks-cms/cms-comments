@@ -25,7 +25,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
         [
             'data-pjax' => '1',
         ],
-        'validateOnBlur' => FALSE,
+        'validateOnBlur' => false,
         'validationUrl' => Url::to(['/' . \skeeks\cms\comments\CommentsModule::getInstance()->commentsModuleID . '/validate/index']),
         'id' => $formID,
         'class' => 'com-form'

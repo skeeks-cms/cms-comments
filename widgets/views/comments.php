@@ -25,8 +25,8 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
         </div>
     <?php endif; ?>
 
-    <?php if ($this->beginCache($cacheKey, $cacheProperties)) : ?>
-        <?php
+    <?php /*if ($this->beginCache($cacheKey, $cacheProperties)) : */?><!--
+        --><?php
 
         echo ListView::widget([
             'dataProvider' => $dataProvider,
@@ -44,10 +44,10 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
             ],
         ]);
 
-        $this->endCache();
-        ?>
-    <?php else: ?>
-        <?php TimeAgo::widget(); ?>
-    <?php endif; ?>
+        /*$this->endCache();
+        */?>
+    <?php /*else: */?><!--
+        <?php /*TimeAgo::widget(); */?>
+    --><?php /*endif; */?>
     <?php Pjax::end(); ?>
 </div>
