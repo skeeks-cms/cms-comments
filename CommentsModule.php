@@ -7,6 +7,7 @@
  */
 
 namespace skeeks\cms\comments;
+use skeeks\cms\models\CmsUser;
 use yii\base\Module;
 
 /**
@@ -101,7 +102,7 @@ class CommentsModule extends Module
      *
      * @var boolean
      */
-    public $displayAvatar = TRUE;
+    public $displayAvatar = true;
     /**
      * Comments asset url
      *
@@ -153,16 +154,16 @@ class CommentsModule extends Module
      * @param int $user_id
      * @return string
      */
-    public function renderUserAvatar($user_id)
+    public function renderUserAvatar($user = null)
     {
-        $this->userAvatar = self::getInstance()->userAvatar;
-        if ($this->userAvatar === null) {
-            return $this->commentsAssetUrl . self::DEFAULT_AVATAR;
-        } elseif (is_string($this->userAvatar)) {
-            return $this->userAvatar;
-        } else {
-            $defaultAvatar = $this->commentsAssetUrl . self::DEFAULT_AVATAR;
-            return ($avatar = call_user_func($this->userAvatar, $user_id)) ? $avatar : $defaultAvatar;
+        $defaultAvatar = $this->commentsAssetUrl . self::DEFAULT_AVATAR;
+
+        if ($user && $user->avatarSrc)
+        {
+            return $user->avatarSrc;
+        } else
+        {
+            return $defaultAvatar;
         }
     }
 

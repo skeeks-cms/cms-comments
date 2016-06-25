@@ -28,7 +28,13 @@ return [
     [
         'comments' =>
         [
-            'class' => 'skeeks\cms\comments\CommentsModule'
+            'class'                     => 'skeeks\cms\comments\CommentsModule',
+            //'maxNestedLevel'          => 5
+            //'onlyRegistered'          => false
+            //'orderDirection'          => SORT_DESC
+            //'nestedOrderDirection'    => SORT_ASC
+            //'displayAvatar'           => true
+            //'commentsPerPage'         => 5
         ]
     ]
 ];

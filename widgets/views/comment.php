@@ -7,13 +7,39 @@ use yii\timeago\TimeAgo;
 ?>
 <?php if (CommentsModule::getInstance()->displayAvatar): ?>
     <div class="avatar">
-        <img src="<?= CommentsModule::getInstance()->renderUserAvatar($model->user_id) ?>"/>
+        <? if ($model->user) : ?>
+            <a class="author" href="<?= $model->user->profileUrl; ?>">
+                <img src="<?= CommentsModule::getInstance()->renderUserAvatar($model->user) ?>"/>
+            </a>
+        <? else : ?>
+            <img src="<?= CommentsModule::getInstance()->renderUserAvatar($model->user) ?>"/>
+        <? endif; ?>
+
     </div>
 <?php endif; ?>
 <div class="comment-content<?= (CommentsModule::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
     <div class="comment-header">
-        <a class="author"><?= Html::encode($model->getAuthor()); ?></a>
-        <span class="time dot-left dot-right"><?= TimeAgo::widget(['timestamp' => $model->created_at]); ?></span>
+        <? if ($model->user) : ?>
+            <a class="author" href="<?= $model->user->profileUrl; ?>"><?= Html::encode($model->getAuthor()); ?></a>
+        <? else : ?>
+            <?= Html::encode($model->getAuthor()); ?> (<?php echo \Yii::t('skeeks/comments', 'Guest'); ?>)
+        <? endif; ?>
+
+        <span class="time dot-left dot-right"><?
+            try{
+                echo TimeAgo::widget([
+                    'timestamp' => $model->created_at,
+                    'language'  => \Yii::$app->language
+                ]);
+            } catch (\Exception $e)
+            {
+                echo TimeAgo::widget([
+                    'timestamp' => $model->created_at,
+                    'language'  => 'en'
+                ]);
+            }
+
+            ?></span>
     </div>
     <div class="comment-text">
         <?= Html::encode($model->content); ?>

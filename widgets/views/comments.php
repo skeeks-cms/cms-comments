@@ -9,10 +9,11 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $model yeesoft\comments\models\Comment */
 $commentsPage = Yii::$app->getRequest()->get("comment-page", 1);
-$cacheKey = 'comment' . $model . $model_id . $commentsPage;
+$cacheKey = 'comment' . $model . $model_id . $commentsPage . \Yii::$app->language;
 $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
 ?>
 <div class="comments">
+    <?php Pjax::begin(); ?>
     <?php if ($this->beginCache($cacheKey . '-count', $cacheProperties)) : ?>
         <h5><?= \Yii::t('skeeks/comments', 'All Comments') ?> (<?= CmsComment::activeCount($model, $model_id) ?>)</h5>
         <?php $this->endCache(); ?>
@@ -26,7 +27,7 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
 
     <?php if ($this->beginCache($cacheKey, $cacheProperties)) : ?>
         <?php
-        Pjax::begin();
+
         echo ListView::widget([
             'dataProvider' => $dataProvider,
             'emptyText' => \Yii::t('skeeks/comments', 'No Comments'),
@@ -42,10 +43,11 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
                 'options' => ['class' => 'pagination pagination-sm'],
             ],
         ]);
-        Pjax::end();
+
         $this->endCache();
         ?>
     <?php else: ?>
         <?php TimeAgo::widget(); ?>
     <?php endif; ?>
+    <?php Pjax::end(); ?>
 </div>

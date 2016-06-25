@@ -33,4 +33,5 @@ return [
     'Username' => 'Имя пользователя',
     'Your email' => 'Ваш E-mail',
     'Your name' => 'Ваше имя',
+    'Guest' => 'Гость',
 ];

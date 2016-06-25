@@ -21,6 +21,10 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     <?php
     $form = ActiveForm::begin([
         'action' => NULL,
+        'options' =>
+        [
+            'data-pjax' => '1',
+        ],
         'validateOnBlur' => FALSE,
         'validationUrl' => Url::to(['/' . \skeeks\cms\comments\CommentsModule::getInstance()->commentsModuleID . '/validate/index']),
         'id' => $formID,
@@ -32,7 +36,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
     ?>
     <?php if (\skeeks\cms\comments\CommentsModule::getInstance()->displayAvatar): ?>
         <div class="avatar">
-            <img src="<?= \skeeks\cms\comments\CommentsModule::getInstance()->renderUserAvatar(Yii::$app->user->id) ?>"/>
+            <img src="<?= \skeeks\cms\comments\CommentsModule::getInstance()->renderUserAvatar(Yii::$app->user->identity) ?>"/>
         </div>
     <?php endif; ?>
     <div class="comment-fields<?= (\skeeks\cms\comments\CommentsModule::getInstance()->displayAvatar) ? ' display-avatar' : '' ?>">
@@ -71,7 +75,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                         </div>
                     <?php else: ?>
                         <div class="col-lg-<?= $col6 ?>">
-                            <?= (($comment->parent_id) ? \Yii::t('skeeks/comments', 'Reply as') : \Yii::t('skeeks/comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->username . '</b>'; ?>
+                            <?= (($comment->parent_id) ? \Yii::t('skeeks/comments', 'Reply as') : \Yii::t('skeeks/comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->displayName . '</b>'; ?>
                         </div>
                     <?php endif; ?>
                 </div>

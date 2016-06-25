@@ -7,28 +7,35 @@
  */
 namespace skeeks\cms\comments\models;
 use skeeks\cms\comments\CommentsModule;
+use skeeks\cms\models\CmsUser;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\HtmlPurifier;
 use yii\helpers\Html;
 /**
- * This is the model class for table "comment".
+ * This is the model class for table "cms_comment".
  *
  * @property integer $id
- * @property string $model
- * @property integer $model_id
- * @property integer $user_id
- * @property string $username
- * @property string $email
- * @property integer $super_parent_id
- * @property integer $parent_id
- * @property integer $status
+ * @property integer $created_by
+ * @property integer $updated_by
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $user_id
+ * @property string $model
+ * @property integer $model_id
+ * @property string $username
+ * @property string $email
+ * @property integer $parent_id
+ * @property integer $super_parent_id
  * @property string $content
+ * @property integer $status
  * @property string $user_ip
  * @property string $url
+ *
+ * @property CmsUser $user
+ * @property CmsUser $createdBy
+ * @property CmsUser $updatedBy
  */
 
 /**
@@ -231,6 +238,33 @@ class CmsComment extends \yii\db\ActiveRecord
     {
         return date($format, ($this->isNewRecord) ? time() : $this->updated_at);
     }
+
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(CommentsModule::getInstance()->userModel, ['id' => 'user_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(CommentsModule::getInstance()->userModel, ['id' => 'created_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUpdatedBy()
+    {
+        return $this->hasOne(CommentsModule::getInstance()->userModel, ['id' => 'updated_by']);
+    }
+
     /**
      * Get author of comment
      *
@@ -239,9 +273,8 @@ class CmsComment extends \yii\db\ActiveRecord
     public function getAuthor()
     {
         if ($this->user_id) {
-            $userModel = CommentsModule::getInstance()->userModel;
-            $user = $userModel::findIdentity($this->user_id);
-            return ($user && isset($user)) ? $user->username : CommentsModule::getInstance()->deletedUserName;
+            $user = $this->user;
+            return ($user && isset($user)) ? $user->displayName : CommentsModule::getInstance()->deletedUserName;
         } else {
             return $this->username;
         }
