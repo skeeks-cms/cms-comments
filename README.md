@@ -35,11 +35,30 @@ Configuration
 
 ```php
 'bootstrap' => ['comments'],
-'modules'=>[
-	'comments' => [
-		'class' => 'yeesoft\comments\Comments',
-	],
+'components' =>
+[
+'i18n' => [
+    'translations'  =>
+    [
+        'skeeks/comments' =>
+        [
+            'class'             => 'yii\i18n\PhpMessageSource',
+            'basePath'          => '@skeeks/cms/comments/messages',
+            'fileMap' => [
+                'skeeks/comments' => 'main.php',
+            ],
+        ]
+    ],
 ],
+],
+
+'modules' =>
+[
+	'comments' =>
+	[
+	    'class' => 'skeeks\cms\comments\CommentsModule'
+	]
+]
 ```
 
 - In you model [optional]
@@ -49,7 +68,7 @@ public function behaviors()
 {
   return [
     'comments' => [
-      'class' => 'yeesoft\comments\behaviors\CommentsBehavior'
+      'class' => 'skeeks\cms\comments\behaviors\CommentsBehavior'
     ]
   ];
 }
@@ -60,7 +79,7 @@ Usage
 
 - Widget namespace
 ```php
-use yeesoft\comments\widgets\Comments;
+use skeeks\cms\comments\widgets\CommentsWidget;
 ```
 
 - Add comment widget in model view using (string) page key :
@@ -105,7 +124,7 @@ Use this options to configurate comments module:
   Example of module settings:
   ```php
     'comments' => [
-      'class' => 'yeesoft\comments\Comments',
+      'class' => 'skeeks\cms\comments\CommentsModule',
       'userAvatar' => function($user_id){
         return User::getUserAvatarByID($user_id);
       }
