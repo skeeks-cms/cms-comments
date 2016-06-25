@@ -34,7 +34,11 @@ class DefaultController extends Controller
      */
     public function actionGetForm()
     {
-        $reply_to = (int)Yii::$app->getRequest()->post('reply_to');
+        /*$reply_to = (int)Yii::$app->getRequest()->post('reply_to');
         return $this->renderAjax('get-form', compact('reply_to'));
+        */
+        $this->layout = false;
+        $reply_to = (int)Yii::$app->getRequest()->post('reply_to');
+        return $this->render('get-form', compact('reply_to'));
     }
 }

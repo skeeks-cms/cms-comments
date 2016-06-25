@@ -14,10 +14,10 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
 ?>
 <div class="comments">
     <?php Pjax::begin(); ?>
-    <?php if ($this->beginCache($cacheKey . '-count', $cacheProperties)) : ?>
+    <?php /*if ($this->beginCache($cacheKey . '-count', $cacheProperties)) : */?>
         <h5><?= \Yii::t('skeeks/comments', 'All Comments') ?> (<?= CmsComment::activeCount($model, $model_id) ?>)</h5>
-        <?php $this->endCache(); ?>
-    <?php endif; ?>
+        <?php /*$this->endCache(); */?><!--
+    --><?php /*endif; */?>
 
     <?php if (!CommentsModule::getInstance()->onlyRegistered || !Yii::$app->user->isGuest): ?>
         <div class="comments-main-form">

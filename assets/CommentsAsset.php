@@ -7,6 +7,7 @@
  */
 namespace skeeks\cms\comments\assets;
 use skeeks\cms\comments\CommentsModule;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\AssetBundle;
 use yii\web\View;
@@ -23,6 +24,7 @@ class CommentsAsset extends AssetBundle
     public $depends = [
         'yii\bootstrap\BootstrapAsset',
         'yii\web\JqueryAsset',
+        'skeeks\sx\assets\Custom',
     ];
     /**
      * Registers this asset bundle with a view.
@@ -33,11 +35,15 @@ class CommentsAsset extends AssetBundle
     {
         $commentsModuleID = CommentsModule::getInstance()->commentsModuleID;
         $getFormLink = Url::to(["/$commentsModuleID/default/get-form"]);
-        $js = <<<JS
-commentsModuleID = "$commentsModuleID";
-commentsFormLink = "$getFormLink";
-JS;
-        $view->registerJs($js, View::POS_HEAD);
+
+        $jsData = Json::encode([
+            'commentsFormLink' => $getFormLink,
+            'commentsModuleID' => $commentsModuleID,
+        ]);
+        $view->registerJs(<<<JS
+new sx.classes.SkeekSComments($jsData);
+JS
+);
         return parent::register($view);
     }
 }
