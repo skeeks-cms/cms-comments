@@ -32,6 +32,7 @@ use yii\helpers\Html;
  * @property integer $status
  * @property string $user_ip
  * @property string $url
+ * @property string $commentUrl
  *
  * @property CmsUser $user
  * @property CmsUser $createdBy
@@ -313,5 +314,13 @@ class CmsComment extends \yii\db\ActiveRecord
     public static function activeCount($model, $model_id = NULL)
     {
         return static::find()->where(['model' => $model, 'model_id' => $model_id])->active()->count();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommentUrl()
+    {
+        return $this->url . "#sx-comment-" . $this->id;
     }
 }
