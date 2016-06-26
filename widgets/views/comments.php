@@ -7,7 +7,9 @@ use yii\timeago\TimeAgo;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $model yeesoft\comments\models\Comment */
+/* @var $widgetComments \skeeks\cms\comments\widgets\CommentsWidget */
+$widgetComments = $this->context;
+
 $commentsPage = Yii::$app->getRequest()->get("comment-page", 1);
 $cacheKey = 'comment' . $model . $model_id . $commentsPage . \Yii::$app->language;
 $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
@@ -28,21 +30,23 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
     <?php /*if ($this->beginCache($cacheKey, $cacheProperties)) : */?><!--
         --><?php
 
-        echo ListView::widget([
+        echo ListView::widget(\yii\helpers\ArrayHelper::merge([
             'dataProvider' => $dataProvider,
             'emptyText' => \Yii::t('skeeks/comments', 'No Comments'),
-            'itemView' => function ($model, $key, $index, $widget) {
+            'itemView' => function ($model, $key, $index, $widget) use ($widgetComments) {
                 $nested_level = 1;
-                return $this->render('comment', compact('model', 'widget', 'nested_level'));
+                return $this->render($widgetComments->itemViewFile, compact('model', 'widget', 'nested_level'));
             },
-            'options' => ['class' => 'comments'],
-            'itemOptions' => ['class' => 'comment'],
+            'options'       => ['class' => 'comments'],
+            'itemOptions'   => [
+                'class' => 'comment'
+            ],
             'layout' => '{items}<div class="text-center">{pager}</div>',
             'pager' => [
                 'class' => yii\widgets\LinkPager::className(),
                 'options' => ['class' => 'pagination pagination-sm'],
             ],
-        ]);
+        ], $widgetComments->listViewOptions));
 
         /*$this->endCache();
         */?>

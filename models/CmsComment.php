@@ -77,6 +77,10 @@ class CmsComment extends \yii\db\ActiveRecord
             'blameable' => [
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'user_id',
+            ],
+            'blameable2' => [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
             ]
         ];
     }

@@ -10,8 +10,28 @@ use yii\data\ActiveDataProvider;
 
 class CommentsWidget extends \yii\base\Widget
 {
+    /**
+     * @var
+     */
     public $model;
+    /**
+     * @var int
+     */
     public $model_id = 0;
+
+    public $viewFile = 'comments';
+
+    /**
+     * @var string
+     */
+    public $itemViewFile = 'comment';
+
+    /**
+     * @var array
+     */
+    public $listViewOptions = [];
+
+
     public function init()
     {
         parent::init();
@@ -20,6 +40,7 @@ class CommentsWidget extends \yii\base\Widget
             $this->model = $this->model->tableName();
         }
     }
+
     public function run()
     {
         $commentsAsset = CommentsAsset::register($this->getView());
@@ -60,6 +81,6 @@ class CommentsWidget extends \yii\base\Widget
                 ]
             ],
         ]);
-        return $this->render('comments', compact('model', 'model_id', 'comment', 'dataProvider'));
+        return $this->render($this->viewFile, compact('model', 'model_id', 'comment', 'dataProvider'));
     }
 }
