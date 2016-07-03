@@ -7,8 +7,10 @@
  */
 namespace skeeks\cms\comments\models;
 use skeeks\cms\comments\CommentsModule;
+use skeeks\cms\comments\events\CommentEvent;
 use skeeks\cms\models\CmsUser;
 use Yii;
+use yii\base\Event;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\HtmlPurifier;
@@ -37,9 +39,7 @@ use yii\helpers\Html;
  * @property CmsUser $user
  * @property CmsUser $createdBy
  * @property CmsUser $updatedBy
- */
-
-/**
+ *
  * Class CmsComment
  * @package skeeks\comments\models
  */
@@ -52,6 +52,7 @@ class CmsComment extends \yii\db\ActiveRecord
     const STATUS_PUBLISHED = self::STATUS_APPROVED;
     const SCENARIO_GUEST = 'guest';
     const SCENARIO_USER = 'user';
+
     private $_comments;
     /**
      * @inheritdoc
@@ -66,8 +67,26 @@ class CmsComment extends \yii\db\ActiveRecord
     public function init()
     {
         parent::init();
+
         $this->on(self::EVENT_BEFORE_INSERT, [$this, 'setUserData']);
+        $this->on(self::EVENT_AFTER_DELETE, [$this, '_triggerAfterDelete']);
+        $this->on(self::EVENT_AFTER_INSERT, [$this, '_triggerAfterInsert']);
     }
+
+    public function _triggerAfterDelete($e)
+    {
+        CommentsModule::getInstance()->trigger(CommentsModule::EVENT_COMMENT_DELETED, new CommentEvent([
+            'comment' => $this
+        ]));
+    }
+
+    public function _triggerAfterInsert($e)
+    {
+        CommentsModule::getInstance()->trigger(CommentsModule::EVENT_COMMENT_ADDED, new CommentEvent([
+            'comment' => $this
+        ]));
+    }
+
     /**
      * @inheritdoc
      */
@@ -85,6 +104,7 @@ class CmsComment extends \yii\db\ActiveRecord
             ]
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -143,7 +163,7 @@ class CmsComment extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      *
-     * @return CommentQuery the active query used by this AR class.
+     * @return CmsCommentQuery the active query used by this AR class.
      */
     public static function find($loadComments = false)
     {

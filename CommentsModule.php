@@ -25,6 +25,15 @@ class CommentsModule extends Module
     const DEFAULT_AVATAR = '/images/user.png';
 
     /**
+     *
+     */
+    const EVENT_COMMENT_ADDED   = 'commentAdded';
+    /**
+     *
+     */
+    const EVENT_COMMENT_DELETED  = 'commentDeleted';
+
+    /**
      *  User model class name
      *
      * @var string

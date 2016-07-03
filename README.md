@@ -58,26 +58,26 @@ Configuration
 	[
 	    'class' => 'skeeks\cms\comments\CommentsModule',
 	    //'maxNestedLevel'          => 5
-            //'onlyRegistered'          => false
-            //'orderDirection'          => SORT_DESC
-            //'nestedOrderDirection'    => SORT_ASC
-            //'displayAvatar'           => true
-            //'commentsPerPage'         => 5,
-            'on commentAdded' => function(\skeeks\cms\comments\events\CommentEvent $e)
-            {
-                /**
-                 * @var $comment \skeeks\cms\comments\models\CmsComment
-                 */
-                $comment = $e->comment;
-                $comment->user;
-                $comment->model;
-                $comment->model_id;
-            },
-            
-            'on commentDeleted' => function(\skeeks\cms\comments\events\CommentEvent $e)
-            {
-            	//...
-            }
+        //'onlyRegistered'          => false
+        //'orderDirection'          => SORT_DESC
+        //'nestedOrderDirection'    => SORT_ASC
+        //'displayAvatar'           => true
+        //'commentsPerPage'         => 5,
+        'on commentAdded' => function(\skeeks\cms\comments\events\CommentEvent $e)
+        {
+            /**
+             * @var $comment \skeeks\cms\comments\models\CmsComment
+             */
+            $comment = $e->comment;
+            $comment->user;
+            $comment->model;
+            $comment->model_id;
+        },
+
+        'on commentDeleted' => function(\skeeks\cms\comments\events\CommentEvent $e)
+        {
+            //...
+        }
 	]
 ]
 ```
