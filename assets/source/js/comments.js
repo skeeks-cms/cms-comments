@@ -14,7 +14,7 @@
 
              $(document).on('click', '.comment .reply-button', function (event) {
                 event.preventDefault();
-                var currentForm = $(this).closest('.comment').find('> .reply-form');
+                var currentForm = $(this).closest('.comment').find('.reply-form');
 
                 $.post(self.get('commentsFormLink'), {reply_to: $(this).attr('data-reply-to')})
                     .done(function (data) {
