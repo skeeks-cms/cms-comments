@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\timeago\TimeAgo;
 ?>
-<!--<div id="sx-comment-<?/*= $model->id; */?>">-->
+<div id="sx-comment-<?= $model->id; ?>" class="comment" data-key="<?= $model->id; ?>">
     <?php if (CommentsModule::getInstance()->displayAvatar): ?>
         <div class="avatar">
             <? if ($model->user) : ?>
@@ -79,4 +79,4 @@ use yii\timeago\TimeAgo;
             </div>
         <?php endif; ?>
     <?php endif; ?>
-<!--</div>-->
+</div>

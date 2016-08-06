@@ -39,7 +39,7 @@ $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
             },
             'options'       => ['class' => 'comments'],
             'itemOptions'   => [
-                'class' => 'comment'
+                'tag' => false
             ],
             'layout' => '{items}<div class="text-center">{pager}</div>',
             'pager' => [
