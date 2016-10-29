@@ -8,14 +8,21 @@ use yii\widgets\ListView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $widgetComments \skeeks\cms\comments\widgets\CommentsWidget */
-$widgetComments = $this->context;
-
-$commentsPage = Yii::$app->getRequest()->get("comment-page", 1);
-$cacheKey = 'comment' . $model . $model_id . $commentsPage . \Yii::$app->language;
-$cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
 ?>
 <div class="comments">
-    <?php Pjax::begin(); ?>
+
+    <?php Pjax::begin([
+        'timeout' => 30000
+    ]); ?>
+
+    <?
+        $widgetComments = $this->context;
+
+        $commentsPage = Yii::$app->getRequest()->get("comment-page", 1);
+        $cacheKey = 'comment' . $model . $model_id . $commentsPage . \Yii::$app->language;
+        $cacheProperties = CommentsHelper::getCacheProperties($model, $model_id);
+    ?>
+
     <?php /*if ($this->beginCache($cacheKey . '-count', $cacheProperties)) : */?>
         <h5><?= \Yii::t('skeeks/comments', 'All Comments') ?> (<?= CmsComment::activeCount($model, $model_id) ?>)</h5>
         <?php /*$this->endCache(); */?><!--

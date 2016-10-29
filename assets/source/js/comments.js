@@ -12,18 +12,29 @@
         {
              var self = this;
 
+            if ($.pjax !== undefined)
+            {
+                $.pjax.defaults.timeout = 30000;
+            }
+
              $(document).on('click', '.comment .reply-button', function (event) {
-                event.preventDefault();
+                 event.preventDefault();
                 var currentForm = $(this).closest('.comment').find('> .reply-form');
+
 
                 $.post(self.get('commentsFormLink'), {reply_to: $(this).attr('data-reply-to')})
                     .done(function (data) {
                         $('.comments .reply-form').not($(currentForm)).hide(self.get('displayFormDuration', 500));
                         $(this).closest('.comment').find('> .reply-form').show(self.get('displayFormDuration', 500));
                         $(currentForm).hide().html(data).show(self.get('displayFormDuration', 500));
+
+                        $(currentForm).on('submit', function ()
+                        {
+                            console.log('submit')
+                            sx.block($(this));
+                        });
                     });
              });
-
 
             //Show 'username' and 'email' fields in main form and hide all reply forms
             $(document).on('click', '.comments-main-form .field-cmscomment-content', function (event) {
@@ -38,8 +49,13 @@
             });
 
             //Disable submit button after click
-            $(document).on('beforeValidate', ".comments-main-form form, .comment-form form", function (event, messages) {
+            /*$(document).on('beforeValidate', ".comments-main-form form, .comment-form form", function (event, messages) {
+                $('.comments').find("[type=submit]").prop('disabled', true);
                 $(this).find("[type=submit]").prop('disabled', true);
+            });*/
+
+            $(document).on('beforeSubmit', ".comments-main-form form, .comment-form form", function (event, messages) {
+                sx.block($(this));
             });
 
             //Enable submit button if form has errors
@@ -49,6 +65,8 @@
                 for (var propertyName in messages) {
                     hasError = hasError || !(!messages[propertyName] || 0 === messages[propertyName].length);
                 }
+
+                $(this).find("[type=submit]").prop('disabled', false);
 
                 if (hasError) {
                     $(this).find("[type=submit]").prop('disabled', false);

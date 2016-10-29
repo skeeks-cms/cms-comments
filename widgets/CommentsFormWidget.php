@@ -13,6 +13,8 @@ use yii\helpers\HtmlPurifier;
 
 class CommentsFormWidget extends \yii\base\Widget
 {
+    public static $autoIdPrefix = 'CommentsFormWidget';
+
     public $reply_to;
     private $_comment;
     public function init()
@@ -20,10 +22,10 @@ class CommentsFormWidget extends \yii\base\Widget
         parent::init();
         if (!$this->_comment) {
             $this->_comment = new CmsComment(['scenario' => (Yii::$app->user->isGuest) ? CmsComment::SCENARIO_GUEST : CmsComment::SCENARIO_USER]);
-            $post = Yii::$app->getRequest()->post();
+            /*$post = Yii::$app->getRequest()->post();
             if ($this->_comment->load($post) && ($this->reply_to == ArrayHelper::getValue($post, 'Comment.parent_id'))) {
                 $this->_comment->validate();
-            }
+            }*/
         }
         if ($this->reply_to) {
             $this->_comment->parent_id = $this->reply_to;

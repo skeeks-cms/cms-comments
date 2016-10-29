@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 
 class CommentsWidget extends \yii\base\Widget
 {
+    public static $autoIdPrefix = 'CommentsWidget';
     /**
      * @var
      */
@@ -45,6 +46,7 @@ class CommentsWidget extends \yii\base\Widget
     {
         $commentsAsset = CommentsAsset::register($this->getView());
         CommentsModule::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
+
         $model = $this->model;
         $model_id = $this->model_id;
         $comment = new CmsComment(compact('model', 'model_id'));
@@ -59,8 +61,11 @@ class CommentsWidget extends \yii\base\Widget
                         'email' => $comment->email,
                     ]);
                 }
-                Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
-                return;
+
+                $comment = new CmsComment(compact('model', 'model_id'));
+                $comment->scenario = (Yii::$app->user->isGuest) ? CmsComment::SCENARIO_GUEST : CmsComment::SCENARIO_USER;
+                //Yii::$app->getResponse()->redirect(Yii::$app->request->referrer);
+                //return;
             }
         }
         $dataProvider = new ActiveDataProvider([

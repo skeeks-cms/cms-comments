@@ -14,6 +14,7 @@ use yii\web\Controller;
 
 class DefaultController extends Controller
 {
+    public $enableCsrfValidation = false;
 
     public function behaviors()
     {

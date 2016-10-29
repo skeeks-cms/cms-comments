@@ -8,8 +8,6 @@ use yii\widgets\ActiveForm;
 ?>
 
 <?php
-$commentsAsset = CommentsAsset::register($this);
-\skeeks\cms\comments\CommentsModule::getInstance()->commentsAssetUrl = $commentsAsset->baseUrl;
 $col12 = \skeeks\cms\comments\CommentsModule::getInstance()->gridColumns;
 $col6 = (int) ($col12 / 2);
 $formID = 'comment-form' . (($comment->parent_id) ? '-' . $comment->parent_id : '');
@@ -25,6 +23,8 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
         [
             'data-pjax' => '1',
         ],
+        //'enableAjaxValidation' => true,
+        //'enableClientValidation' => false,
         'validateOnBlur' => false,
         'validationUrl' => Url::to(['/' . \skeeks\cms\comments\CommentsModule::getInstance()->commentsModuleID . '/validate/index']),
         'id' => $formID,
