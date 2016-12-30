@@ -95,6 +95,56 @@ public function behaviors()
 }
 ```
 
+- Content element property update count comments
+
+```php
+'on commentAdded' => function(\skeeks\cms\comments\events\CommentEvent $e)
+{
+	/**
+	 * @var $comment \skeeks\cms\comments\models\CmsComment
+	 * @var $user \common\models\User
+	 * @var $element \skeeks\cms\models\CmsContentElement
+	 */
+	$comment = $e->comment;
+	$user = $comment->user;
+
+	/*$user->appUser->total_comments = $user->appUser->total_comments + 1;
+	if (!$user->appUser->save())
+	{
+	    \Yii::error("Not update user total comments: {$user->id}", 'project');
+	}*/
+
+	\Yii::error(\skeeks\cms\models\CmsContentElement::tableName(), 'project');
+	\Yii::error(\yii\helpers\Json::encode($comment->toArray()), 'project');
+
+	if ($comment->model == \skeeks\cms\models\CmsContentElement::tableName())
+	{
+	    $element = \skeeks\cms\models\CmsContentElement::findOne($comment->model_id);
+	    if ($element && $element->relatedPropertiesModel->hasAttribute('comments'))
+	    {
+		$totalComments = \skeeks\cms\comments\models\CmsComment::find()->where([
+		    'model_id' => $element->id,
+		])->andWhere(['model' => \skeeks\cms\models\CmsContentElement::tableName()])->count();
+		$element->relatedPropertiesModel->setAttribute('comments', $totalComments);
+		//$element->relatedPropertiesModel->setAttribute('comments', ((int) $element->relatedPropertiesModel->getAttribute('comments') + 1));
+
+		if (!$element->relatedPropertiesModel->save())
+		{
+		    \Yii::error("Not update element total comments: {$element->id}", 'project');
+		}
+	    } else
+	    {
+		\Yii::error("Element not found or not have property comments: {$element->id}", 'project');
+	    }
+	}
+},
+
+'on commentDeleted' => function(\skeeks\cms\comments\events\CommentEvent $e)
+{
+....
+	    
+```
+	    
 Usage
 ---
 
