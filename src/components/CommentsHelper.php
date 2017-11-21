@@ -49,7 +49,7 @@ class CommentsHelper
             'dependency' => [
                 'class' => 'yii\caching\DbDependency',
                 'sql' => "SELECT COUNT(*) FROM {$tableName} "
-                    . "WHERE `model` = '{$model}' AND `model_id` = '{$model_id}'",
+                    . "WHERE model = '{$model}' AND model_id = '{$model_id}'",
             ]
         ];
     }
