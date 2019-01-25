@@ -33,12 +33,14 @@
         }
     },
     "extra": {
-        "web": [
-            "src/config/common.php",
-            "src/config/web.php"
-        ],
-        "console": [
-            "src/config/common.php"
-        ]
+        "config-plugin": {
+            "web": [
+                "src/config/common.php",
+                "src/config/web.php"
+            ],
+            "console": [
+                "src/config/common.php"
+            ]
+        }
     }
 }

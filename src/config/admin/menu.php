@@ -6,26 +6,22 @@
  * @date 26.06.2016
  */
 return [
-    'other' =>
-    [
-        'items' =>
-        [
-            'comments' =>
-            [
-                'label' => \Yii::t('skeeks/comments', 'Comments'),
-                "img"       => ['skeeks\cms\comments\assets\CommentsAsset', 'images/comments.jpg'],
-                'priority'  => 250,
+    'other' => [
+        'items' => [
+            'comments' => [
+                'label'    => ['skeeks/comments', 'Comments'],
+                "img"      => ['skeeks\cms\comments\assets\CommentsAsset', 'images/comments.jpg'],
+                'priority' => 250,
 
-                'items' =>
-                [
+                'items' => [
                     [
-                        'priority'  => 0,
-                        'label' => \Yii::t('skeeks/comments', 'Comments'),
-                        "url"       => ["comments/admin-comment"],
-                        "img"       => ['skeeks\cms\comments\assets\CommentsAsset', 'images/comments.jpg'],
+                        'priority' => 0,
+                        'label'    => ['skeeks/comments', 'Comments'],
+                        "url"      => ["comments/admin-comment"],
+                        "img"      => ['skeeks\cms\comments\assets\CommentsAsset', 'images/comments.jpg'],
                     ],
-                ]
-            ]
-        ]
-    ]
+                ],
+            ],
+        ],
+    ],
 ];
