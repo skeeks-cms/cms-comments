@@ -33,7 +33,7 @@ class AdminCommentController extends AdminModelEditorController
 
             'create' =>
             [
-                'visible'    => false
+                'isVisible'    => false
             ]
         ]);
     }
