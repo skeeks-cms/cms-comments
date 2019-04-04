@@ -27,7 +27,7 @@ use yii\timeago\TimeAgo;
             <? endif; ?>
 
             <span class="time dot-left dot-right"><?
-                try{
+                try {
                     echo TimeAgo::widget([
                         'timestamp' => $model->created_at,
                         'language'  => \Yii::$app->language
