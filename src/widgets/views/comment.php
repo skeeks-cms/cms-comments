@@ -43,7 +43,7 @@ use yii\timeago\TimeAgo;
                 ?></span>
         </div>
         <div class="comment-text">
-            <?= Html::encode($model->content); ?>
+            <?= nl2br(Html::encode($model->content)); ?>
         </div>
         <?php if ($nested_level < CommentsModule::getInstance()->maxNestedLevel): ?>
             <div class="comment-footer">
