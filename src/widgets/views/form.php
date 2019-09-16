@@ -13,8 +13,7 @@ $col6 = (int) ($col12 / 2);
 $formID = 'comment-form' . (($comment->parent_id) ? '-' . $comment->parent_id : '');
 $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
 ?>
-
-<div class="comment-form <?= $replyClass ?> clearfix">
+<div class="comment-form <?= $replyClass ?> clearfix g-mb-10">
 
     <?php
     $form = ActiveForm::begin([
@@ -51,7 +50,7 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
         </div>
 
         <div class="comment-fields-more">
-            <div class="buttons text-right">
+            <div class="buttons text-right g-mt-5">
                 <?= Html::button(\Yii::t('skeeks/comments', 'Cancel'), ['class' => 'btn btn-default btn-sm reply-cancel']) ?>
                 <?= Html::submitButton(($comment->parent_id) ? \Yii::t('skeeks/comments', 'Reply') : \Yii::t('skeeks/comments', 'Post'), ['class' => 'btn btn-primary btn-sm']) ?>
             </div>
@@ -74,26 +73,13 @@ $replyClass = ($comment->parent_id) ? 'comment-form-reply' : '';
                             ])->label(false) ?>
                         </div>
                     <?php else: ?>
-                        <div class="col-lg-<?= $col6 ?>">
+                        <div class="col-lg-8 g-mt-5">
                             <?= (($comment->parent_id) ? \Yii::t('skeeks/comments', 'Reply as') : \Yii::t('skeeks/comments', 'Post as')) . ' <b>' . Yii::$app->user->identity->displayName . '</b>'; ?>
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
-
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>
-
-
-<?php
-//if (Yii::$app->getRequest()->post()) {
-//$options    = Json::htmlEncode($form->getClientOptions());
-//$attributes = Json::htmlEncode($form->attributes);
-//\yii\widgets\ActiveFormAsset::register($this);
-//$this->registerJs("jQuery('#$formID').yiiActiveForm($attributes, $options);");
-//}
-?>

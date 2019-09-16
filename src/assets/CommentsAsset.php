@@ -31,7 +31,7 @@ class CommentsAsset extends AssetBundle
      * @param \yii\web\View $view the view to be registered with
      * @return static the registered asset bundle instance
      */
-    public static function register($view)
+    public function registerAssetFiles($view)
     {
         $commentsModuleID = CommentsModule::getInstance()->commentsModuleID;
         $getFormLink = Url::to(["/$commentsModuleID/default/get-form"]);
@@ -44,6 +44,6 @@ class CommentsAsset extends AssetBundle
 new sx.classes.SkeekSComments($jsData);
 JS
 );
-        return parent::register($view);
+        return parent::registerAssetFiles($view);
     }
 }
